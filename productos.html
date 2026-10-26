@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Productos | Tecno Mundo</title>
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/navbar.css">
+  <link rel="stylesheet" href="assets/css/productos.css">
+  <link rel="stylesheet" href="assets/css/footer.css">
+</head>
+<body>
+  <header id="navbar"></header>
+
+  <main>
+    <section id="productos">
+      <div class="wrap">
+        <div class="row" style="margin-bottom: 18px; flex-wrap: wrap">
+          <h2 style="font-size: 2rem">Catálogo completo de productos</h2>
+          <a class="btn-link" href="index.html">← Volver al inicio</a>
+        </div>
+        <div class="chips" id="chips"></div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-credits">
+        <div class="footer-credit">
+          <b>Página base</b>
+          <span>Sebastian Florentino #7</span>
+        </div>
+        <div class="footer-credit">
+          <b>Sección de productos y admin.</b>
+          <span>Elian García #8</span>
+        </div>
+        <div class="footer-credit">
+          <b>Acondicionamiento final</b>
+          <span>Camilo Musial #16</span>
+        </div>
+      </div>
+      <div class="footer-copy">
+        © <span id="yr"></span> <span data-b="nombre"></span>. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="dCart">
+    <h3 style="margin-bottom: 10px">Tu carrito</h3>
+    <div id="cartList"></div>
+    <div class="row" style="margin-top: 14px">
+      <strong id="total"></strong>
+    </div>
+    <div class="row" style="margin-top: 14px">
+      <button id="cClose">Seguir comprando</button>
+      <button class="bacc" id="cBuy">Finalizar pedido</button>
+    </div>
+  </dialog>
+
+  <div id="toast" role="status"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/productos.js"></script>
+  <script src="assets/js/carrito.js"></script>
+</body>
+</html>

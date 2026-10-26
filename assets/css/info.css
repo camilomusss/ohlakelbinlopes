@@ -1,0 +1,19 @@
+.info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.info div {
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.info b {
+  display: block;
+  color: var(--mut);
+  font-weight: 600;
+  font-size: 0.9rem;
+}

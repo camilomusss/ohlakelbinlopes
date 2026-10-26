@@ -1,0 +1,88 @@
+header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  background: var(--surf);
+  border-bottom: 1px solid var(--line);
+  z-index: 30;
+}
+
+header .wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 60px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 1.2rem;
+  margin-right: auto;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-logo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.badge {
+  display: none;
+  background: var(--acc);
+  color: var(--onacc);
+  border-radius: 99px;
+  padding: 0 8px;
+  margin-left: 6px;
+  font-size: 0.85rem;
+}
+
+.modo {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--acc);
+}
+
+/* Capa sólida del color del fondo que cubre todo menos el navbar al navegar entre páginas */
+.page-transition {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 61px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg);
+  z-index: 25;
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 0.32s ease;
+}
+
+.page-transition.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 600px) {
+  header {
+    position: static;
+  }
+}

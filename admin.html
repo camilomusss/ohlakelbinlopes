@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Panel de Administrador | Tecno Mundo</title>
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/navbar.css">
+  <link rel="stylesheet" href="assets/css/productos.css">
+  <link rel="stylesheet" href="assets/css/contacto.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+  <link rel="stylesheet" href="assets/css/footer.css">
+</head>
+<body>
+  <!-- CONTENIDO DEL PANEL DE ADMIN (cargado en el fondo y desenfocado hasta verificar PIN) -->
+  <div id="adminShell" class="admin-shell blurred">
+    <header id="navbar"></header>
+
+    <main class="admin-panel" id="admin">
+      <div class="wrap">
+        <div class="admin-header-row">
+          <h1>Panel de administrador</h1>
+          <a class="lnk" id="lnkV" href="ventas/">Ver ventas</a>
+        </div>
+
+        <div class="cols">
+          <div class="admin-card">
+            <h3 id="pfTitle">Agregar producto</h3>
+            <form class="f" id="pf">
+              <label>
+                Nombre
+                <input name="nombre" required>
+              </label>
+              <label>
+                Categoría
+                <input name="cat" list="cats" placeholder="Ej.: Procesadores">
+              </label>
+              <datalist id="cats"></datalist>
+              <label>
+                Descripción
+                <textarea name="desc" rows="2"></textarea>
+              </label>
+              <div class="two">
+                <label>
+                  Precio (RD$)
+                  <input name="precio" type="number" min="0" step="0.01" required>
+                </label>
+                <label>
+                  Cantidad en existencia
+                  <input name="stock" type="number" min="0" step="1" required>
+                </label>
+              </div>
+              <label>
+                Imagen (subir archivo)
+                <input type="file" id="pfile" accept="image/*">
+              </label>
+              <label>
+                o dirección de imagen (URL)
+                <input name="img" placeholder="https://...">
+              </label>
+              <label>
+                Enlace de Amazon (opcional)
+                <input name="url" type="url" placeholder="https://www.amazon.com/dp/...">
+              </label>
+              <div class="row">
+                <button class="bacc" type="submit" id="pfSave">Guardar producto</button>
+                <button type="button" id="pfCancel">Cancelar</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="admin-card">
+            <h3>Información del negocio</h3>
+            <form class="f" id="bf">
+              <label>
+                Nombre del negocio
+                <input name="nombre">
+              </label>
+              <label>
+                Lema
+                <input name="lema">
+              </label>
+              <label>
+                Historia o quiénes somos
+                <textarea name="historia" rows="4"></textarea>
+              </label>
+              <label>
+                Horario
+                <input name="horario">
+              </label>
+              <label>
+                Dirección
+                <input name="dir">
+              </label>
+              <div class="two">
+                <label>
+                  Teléfono
+                  <input name="tel">
+                </label>
+                <label>
+                  Correo
+                  <input name="email" type="email">
+                </label>
+              </div>
+              <button class="bacc" type="submit">Guardar información</button>
+            </form>
+          </div>
+
+          <div class="admin-card">
+            <h3>Mensajes de clientes</h3>
+            <div id="msgs"></div>
+          </div>
+        </div>
+
+        <section id="productos">
+          <h2>Administrar productos existentes</h2>
+          <div class="chips" id="chips" style="margin-top: 14px"></div>
+          <div class="grid" id="grid"></div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <div class="footer-credits">
+          <div class="footer-credit">
+            <b>Página base</b>
+            <span>Sebastian Florentino #7</span>
+          </div>
+          <div class="footer-credit">
+            <b>Sección de productos y admin.</b>
+            <span>Elian García #8</span>
+          </div>
+          <div class="footer-credit">
+            <b>Acondicionamiento final</b>
+            <span>Camilo Musial #16</span>
+          </div>
+        </div>
+        <div class="footer-copy">
+          © <span id="yr"></span> <span data-b="nombre"></span>. Todos los derechos reservados.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- POPUP DE CREDENCIALES SUPERPUESTO -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-popup" id="loginPopup" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <form id="lf" class="f">
+        <h3 id="loginTitle">Modo administrador</h3>
+        <p class="login-sub">Ingresa las credenciales para desbloquear el panel de configuración.</p>
+        <label>
+          Contraseña (PIN)
+          <input type="password" id="pin" inputmode="numeric" autocomplete="new-password" required autofocus>
+        </label>
+        <div class="row">
+          <button type="button" id="lCancel">Cancelar</button>
+          <button class="bacc" type="submit" id="lSubmit">Entrar</button>
+        </div>
+        <div class="verify-status" id="verifyStatus" aria-live="polite">
+          <span class="verify-icon">
+            <span class="spinner"></span>
+            <span class="checkmark">✓</span>
+          </span>
+          <span id="verifyText">Verificando...</span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" role="status"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/productos.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

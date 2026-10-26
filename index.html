@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tecno Mundo</title>
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/navbar.css">
+  <link rel="stylesheet" href="assets/css/landing.css">
+  <link rel="stylesheet" href="assets/css/track-record.css">
+  <link rel="stylesheet" href="assets/css/productos.css">
+  <link rel="stylesheet" href="assets/css/info.css">
+  <link rel="stylesheet" href="assets/css/contacto.css">
+  <link rel="stylesheet" href="assets/css/footer.css">
+</head>
+<body>
+  <header id="navbar"></header>
+
+  <main>
+    <div class="wrap hero">
+      <div class="hcopy">
+        <h1 data-b="nombre">Tecno Mundo</h1>
+        <p data-b="lema"></p>
+        <a href="#productos" data-scroll="#productos">Ver productos</a>
+      </div>
+      <div class="hvis" id="hvis" aria-hidden="true"></div>
+    </div>
+
+    <section class="perks">
+      <div class="wrap">
+        <div class="perk">
+          <h3>Compra en Amazon</h3>
+          <p>Cada botón te lleva a la página del producto para ver el precio actual y comprar.</p>
+        </div>
+        <div class="perk">
+          <h3>Marcas reconocidas</h3>
+          <p>Componentes de marcas conocidas para armar o mejorar tu computadora.</p>
+        </div>
+        <div class="perk">
+          <h3>Todo para tu PC</h3>
+          <p>Procesadores, memoria y tarjetas gráficas en un solo lugar.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="historia">
+      <div class="wrap">
+        <h2>Quiénes somos</h2>
+        <p class="txt" data-b="historia"></p>
+      </div>
+    </section>
+
+    <section id="productos">
+      <div class="wrap">
+        <h2>Productos destacados</h2>
+        <div class="chips" id="chips"></div>
+        <div class="grid" id="grid" data-limit="3"></div>
+      </div>
+    </section>
+
+    <section id="info">
+      <div class="wrap">
+        <h2>Información del negocio</h2>
+        <div class="info">
+          <div>
+            <b>Horario</b>
+            <span data-b="horario"></span>
+          </div>
+          <div>
+            <b>Dirección</b>
+            <span data-b="dir"></span>
+          </div>
+          <div>
+            <b>Teléfono</b>
+            <span data-b="tel"></span>
+          </div>
+          <div>
+            <b>Correo</b>
+            <span data-b="email"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="wrap">
+        <h2>Contacto</h2>
+        <form class="f" id="cf">
+          <label>
+            Nombre
+            <input name="nombre" required>
+          </label>
+          <label>
+            Correo o teléfono
+            <input name="contacto" required>
+          </label>
+          <label>
+            Mensaje
+            <textarea name="texto" rows="4" required></textarea>
+          </label>
+          <button class="b1" type="submit">Enviar mensaje</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-credits">
+        <div class="footer-credit">
+          <b>Página base</b>
+          <span>Sebastian Florentino #7</span>
+        </div>
+        <div class="footer-credit">
+          <b>Sección de productos y admin.</b>
+          <span>Elian García #8</span>
+        </div>
+        <div class="footer-credit">
+          <b>Acondicionamiento final</b>
+          <span>Camilo Musial #16</span>
+        </div>
+      </div>
+      <div class="footer-copy">
+        © <span id="yr"></span> <span data-b="nombre"></span>. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="dCart">
+    <h3 style="margin-bottom: 10px">Tu carrito</h3>
+    <div id="cartList"></div>
+    <div class="row" style="margin-top: 14px">
+      <strong id="total"></strong>
+    </div>
+    <div class="row" style="margin-top: 14px">
+      <button id="cClose">Seguir comprando</button>
+      <button class="bacc" id="cBuy">Finalizar pedido</button>
+    </div>
+  </dialog>
+
+  <div id="toast" role="status"></div>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/productos.js"></script>
+  <script src="assets/js/carrito.js"></script>
+  <script src="assets/js/contacto.js"></script>
+</body>
+</html>
