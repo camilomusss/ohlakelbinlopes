@@ -1,5 +1,21 @@
+/* ==========================================================================
+   CONFIGURACIÓN DE JSONBIN.IO (Para sincronizar en vivo en GitHub Pages)
+   1. Crea una cuenta gratis en https://jsonbin.io
+   2. Crea un Bin nuevo con {"init": true} y pega el ID en JSONBIN_BIN_ID
+   3. En "API Keys", copia tu X-Master-Key y pégala en JSONBIN_API_KEY
+   ========================================================================== */
+var JSONBIN_BIN_ID = "6adeb10fac6210605a51ead5";
+var JSONBIN_API_KEY = "$2a$10$aFV08CgteAbP6S1J7CDi0eEApXapK0V1TaT.lUeOF8g5THOSK0U.C";
+
 var KEY = "negocio_v2";
-var PIN = "1234"; // Cambia el PIN aquí
+var DEFAULT_PIN = "1234";
+var PIN = (function () {
+  try {
+    return localStorage.getItem("negocio_pin") || DEFAULT_PIN;
+  } catch (e) {
+    return DEFAULT_PIN;
+  }
+})();
 var VER = 6;
 
 var DEF = {
@@ -114,6 +130,8 @@ var cart = {};
 var editId = null;
 var pend = "";
 S.sales = S.sales || [];
+S.pin = S.pin || PIN;
+PIN = S.pin;
 var cat = "*";
 
 var $ = function (s) {
@@ -131,23 +149,99 @@ function load() {
         d.products = f.products;
         d.ver = VER;
       }
+      if (d.pin) {
+        PIN = String(d.pin);
+      }
       return d;
     }
   } catch (e) {}
 
   var x = JSON.parse(JSON.stringify(DEF));
   x.ver = VER;
+  x.pin = PIN;
   return x;
 }
 
+function saveToCloud() {
+  if (!JSONBIN_BIN_ID || !JSONBIN_API_KEY) {
+    return Promise.resolve(true);
+  }
+
+  return fetch("https://api.jsonbin.io/v3/b/" + JSONBIN_BIN_ID.trim(), {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Master-Key": JSONBIN_API_KEY.trim()
+    },
+    body: JSON.stringify(S)
+  })
+    .then(function (res) {
+      if (!res.ok) throw new Error("Error HTTP " + res.status);
+      return true;
+    })
+    .catch(function () {
+      toast("Guardado local, pero no se pudo sincronizar con JSONBin.");
+      return false;
+    });
+}
+
+function syncFromCloud() {
+  if (!JSONBIN_BIN_ID || !JSONBIN_API_KEY) return;
+
+  fetch("https://api.jsonbin.io/v3/b/" + JSONBIN_BIN_ID.trim() + "/latest", {
+    method: "GET",
+    headers: {
+      "X-Master-Key": JSONBIN_API_KEY.trim(),
+      "X-Bin-Meta": "false"
+    }
+  })
+    .then(function (res) {
+      return res.ok ? res.json() : null;
+    })
+    .then(function (remoteData) {
+      if (!remoteData) return;
+
+      var record = remoteData.record || remoteData;
+
+      /* Si el Bin está recién creado (ej. {"init": true}), subimos los datos iniciales automáticamente */
+      if (!record.biz || !Array.isArray(record.products)) {
+        saveToCloud();
+        return;
+      }
+
+      S = record;
+      S.sales = S.sales || [];
+      S.msgs = S.msgs || [];
+      if (S.pin) {
+        PIN = String(S.pin);
+        try {
+          localStorage.setItem("negocio_pin", PIN);
+        } catch (e) {}
+      } else {
+        S.pin = PIN;
+      }
+
+      try {
+        localStorage.setItem(KEY, JSON.stringify(S));
+      } catch (e) {}
+
+      if (typeof renderHero === "function") renderHero();
+      if (typeof render === "function") render();
+    })
+    .catch(function () {});
+}
+
 function save() {
+  S.pin = PIN;
   try {
     localStorage.setItem(KEY, JSON.stringify(S));
-    return true;
   } catch (e) {
     toast("No se pudo guardar. La imagen puede ser muy grande.");
     return false;
   }
+
+  saveToCloud();
+  return true;
 }
 
 function esc(t) {
@@ -192,6 +286,9 @@ function prod(id) {
 function safeUrl(u) {
   return /^https?:\/\//i.test(u || "") ? u : "";
 }
+
+/* Sincronizar desde JSONBin al cargar la página */
+syncFromCloud();
 
 /* Limpiar .html y #hash de la barra de direcciones y manejar scroll suave sin # en la URL */
 (function cleanUrlAndScroll() {

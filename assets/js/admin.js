@@ -72,6 +72,16 @@ $("#lCancel").onclick = function () {
   }
 };
 
+/* Solo permitir números en los campos de PIN */
+["#pin", "#oldPin", "#newPin"].forEach(function (sel) {
+  var inp = $(sel);
+  if (inp) {
+    inp.addEventListener("input", function () {
+      this.value = this.value.replace(/\D+/g, "");
+    });
+  }
+});
+
 $("#lf").onsubmit = function (e) {
   e.preventDefault();
 
@@ -116,6 +126,66 @@ $("#lf").onsubmit = function (e) {
       }, 380);
     }, 650);
   }, 950);
+};
+
+/* Popup para cambiar el PIN */
+var cpOverlay = $("#changePinOverlay");
+var cpPopup = $("#changePinPopup");
+var adminShell = $("#adminShell");
+
+$("#btnChangePin").onclick = function () {
+  $("#cpf").reset();
+  cpPopup.classList.remove("shrinking");
+  cpOverlay.style.display = "grid";
+  requestAnimationFrame(function () {
+    cpOverlay.classList.remove("hidden");
+    adminShell.classList.add("blurred");
+    $("#oldPin").focus();
+  });
+};
+
+$("#cpCancel").onclick = function () {
+  cpPopup.classList.add("shrinking");
+  cpOverlay.classList.add("hidden");
+  adminShell.classList.remove("blurred");
+  setTimeout(function () {
+    cpOverlay.style.display = "none";
+  }, 360);
+};
+
+$("#cpf").onsubmit = function (e) {
+  e.preventDefault();
+  var oldVal = $("#oldPin").value.trim();
+  var newVal = $("#newPin").value.trim();
+
+  if (oldVal !== PIN) {
+    toast("El PIN actual no coincide.");
+    $("#oldPin").select();
+    return;
+  }
+
+  if (!/^\d+$/.test(newVal)) {
+    toast("El nuevo PIN debe contener solo números.");
+    $("#newPin").focus();
+    return;
+  }
+
+  PIN = newVal;
+  S.pin = newVal;
+  try {
+    localStorage.setItem("negocio_pin", newVal);
+    localStorage.setItem(KEY, JSON.stringify(S));
+  } catch (err) {}
+
+  toast("PIN actualizado. Recargando...");
+  var syncPromise =
+    typeof saveToCloud === "function" ? saveToCloud() : Promise.resolve(true);
+
+  syncPromise.then(function () {
+    setTimeout(function () {
+      window.location.reload();
+    }, 350);
+  });
 };
 
 $("#pfile").onchange = function (e) {

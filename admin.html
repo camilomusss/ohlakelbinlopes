@@ -23,7 +23,10 @@
       <div class="wrap">
         <div class="admin-header-row">
           <h1>Panel de administrador</h1>
-          <a class="lnk" id="lnkV" href="ventas/">Ver ventas</a>
+          <div class="admin-actions">
+            <button type="button" class="btn-outline-acc" id="btnChangePin">Cambiar PIN</button>
+            <a class="lnk" id="lnkV" href="ventas/">Ver ventas</a>
+          </div>
         </div>
 
         <div class="cols">
@@ -123,27 +126,7 @@
       </div>
     </main>
 
-    <footer>
-      <div class="wrap">
-        <div class="footer-credits">
-          <div class="footer-credit">
-            <b>Página base</b>
-            <span>Sebastian Florentino #7</span>
-          </div>
-          <div class="footer-credit">
-            <b>Sección de productos y admin.</b>
-            <span>Elian García #8</span>
-          </div>
-          <div class="footer-credit">
-            <b>Acondicionamiento final</b>
-            <span>Camilo Musial #16</span>
-          </div>
-        </div>
-        <div class="footer-copy">
-          © <span id="yr"></span> <span data-b="nombre"></span>. Todos los derechos reservados.
-        </div>
-      </div>
-    </footer>
+    <footer id="footer"></footer>
   </div>
 
   <!-- POPUP DE CREDENCIALES SUPERPUESTO -->
@@ -171,10 +154,33 @@
     </div>
   </div>
 
+  <!-- POPUP PARA CAMBIAR PIN -->
+  <div class="login-overlay hidden" id="changePinOverlay" style="display: none">
+    <div class="login-popup" id="changePinPopup" role="dialog" aria-modal="true" aria-labelledby="changePinTitle">
+      <form id="cpf" class="f">
+        <h3 id="changePinTitle">Modificar PIN</h3>
+        <p class="login-sub">Confirma tu PIN actual e ingresa el nuevo PIN numérico.</p>
+        <label>
+          PIN actual
+          <input type="password" id="oldPin" inputmode="numeric" pattern="[0-9]+" autocomplete="current-password" required>
+        </label>
+        <label>
+          PIN nuevo (solo números)
+          <input type="password" id="newPin" inputmode="numeric" pattern="[0-9]+" autocomplete="new-password" required>
+        </label>
+        <div class="row">
+          <button type="button" id="cpCancel">Cancelar</button>
+          <button class="bacc" type="submit" id="cpSubmit">Aplicar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="toast" role="status"></div>
 
   <script src="assets/js/data.js"></script>
   <script src="assets/js/navbar.js"></script>
+  <script src="assets/js/footer.js"></script>
   <script src="assets/js/productos.js"></script>
   <script src="assets/js/admin.js"></script>
 </body>

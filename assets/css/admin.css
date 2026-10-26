@@ -27,6 +27,28 @@
   font-size: 2rem;
 }
 
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-outline-acc {
+  background: transparent;
+  border: 1.5px solid var(--acc);
+  color: var(--acc);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-outline-acc:hover {
+  background: rgba(242, 177, 52, 0.12);
+}
+
 .cols {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
