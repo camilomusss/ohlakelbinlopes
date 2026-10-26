@@ -5,9 +5,9 @@ var NAVBAR_FALLBACK =
   '<span data-b="nombre">Tecno Mundo</span>' +
   "</a>" +
   '<nav id="navLinks">' +
-  '<a href="index.html" data-only="admin" style="display: none">Inicio</a>' +
+  '<a href="#admin" data-scroll="#admin" data-only="admin" style="display: none">Inicio</a>' +
   '<a href="index.html" data-scroll="#historia" data-only="store">Quiénes somos</a>' +
-  '<a href="productos.html">Productos</a>' +
+  '<a href="productos.html" id="navProductos">Productos</a>' +
   '<a href="index.html" data-scroll="#info" data-only="store">Información</a>' +
   '<a href="index.html" data-scroll="#contacto" data-only="store">Contacto</a>' +
   "</nav>" +
@@ -25,6 +25,17 @@ function setupNavbarBehavior() {
   document.querySelectorAll('[data-only="store"]').forEach(function (el) {
     el.style.display = isAdminPage ? "none" : "";
   });
+
+  var navProd = document.querySelector("#navProductos");
+  if (navProd) {
+    if (isAdminPage) {
+      navProd.setAttribute("href", "#productos");
+      navProd.setAttribute("data-scroll", "#productos");
+    } else {
+      navProd.setAttribute("href", "productos.html");
+      navProd.removeAttribute("data-scroll");
+    }
+  }
 
   var btnCart = document.querySelector("#btnCart");
   if (btnCart && !isAdminPage) {
